@@ -3,7 +3,7 @@ require 'mechanize'
 
 agent = Mechanize.new
 
-word=["ん"]
+word=["git"]
 
 15.times do |i|
 
