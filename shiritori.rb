@@ -1,5 +1,18 @@
 # coding: utf-8
 require 'mechanize'
+require 'MeCab'
+
+def last_word word
+  word.slice! "ー"
+  mecab = MeCab::Tagger.new
+  result = String.new
+  node = mecab.parseToNode word
+  while node.next.next
+    node = node.next
+  end
+  /([^,]*),[^,]*?$/ =~ node.feature
+  $1[-1]
+end
 
 agent = Mechanize.new
 
@@ -8,13 +21,7 @@ word=["しりとり"]
 15.times do |i|
 
  p i
- word_last = word[i]
- word_last = word_last[word_last.length-1]
-
- if word_last=="ー"
-  word_last = word[i]
-  word_last = word_last[word_last.length-2]
- end 
+ word_last = last_word word[i]
 
  p word_last
 
