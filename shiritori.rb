@@ -3,7 +3,7 @@ require 'mechanize'
 
 agent = Mechanize.new
 
-word=["しりとり"]
+word=["しりとりああ"]
 
 15.times do |i|
 
