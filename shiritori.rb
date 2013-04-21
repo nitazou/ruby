@@ -1,5 +1,18 @@
 # coding: utf-8
 require 'mechanize'
+require 'MeCab'
+
+def last_word word
+  word.slice! "ー"
+  mecab = MeCab::Tagger.new
+  result = String.new
+  node = mecab.parseToNode word
+  while node.next.next
+    node = node.next
+  end
+  /([^,]*),[^,]*?$/ =~ node.feature
+  $1[-1]
+end
 
 agent = Mechanize.new
 
@@ -8,19 +21,13 @@ word=["しりとり"]
 15.times do |i|
 
  p i
- word_last = word[i]
- word_last = word_last[word_last.length-1]
-
- if word_last=="ー"
-  word_last = word[i]
-  word_last = word_last[word_last.length-2]
- end 
+ word_last = last_word word[i]
 
  p word_last
 
 
  suggest=agent.get('http://google.co.jp/complete/search?output=toolbar&hl=ja&q=' + word_last)
- puts suggest.body.toutf8
+ #puts suggest.body.toutf8
 
  start_text = suggest.body.index("data=""") 
  end_text = suggest.body.index("""/>") 
@@ -28,8 +35,8 @@ word=["しりとり"]
 
  word<<result
 
- puts word
-
+ puts result
+ sleep 1
 end
 
 
