@@ -20,7 +20,7 @@ word=["しりとり"]
 
 
  suggest=agent.get('http://google.co.jp/complete/search?output=toolbar&hl=ja&q=' + word_last)
- puts suggest.body.toutf8
+ #puts suggest.body.toutf8
 
  start_text = suggest.body.index("data=""") 
  end_text = suggest.body.index("""/>") 
@@ -28,8 +28,8 @@ word=["しりとり"]
 
  word<<result
 
- puts word
-
+ puts result
+ sleep 1
 end
 
 
