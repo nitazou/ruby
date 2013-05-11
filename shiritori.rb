@@ -1,7 +1,23 @@
 # coding: utf-8
 require 'mechanize'
+<<<<<<< HEAD
 require "rexml/document"
 #require 'moji'
+=======
+require 'MeCab'
+
+def last_word word
+  word.slice! "ー"
+  mecab = MeCab::Tagger.new
+  result = String.new
+  node = mecab.parseToNode word
+  while node.next.next
+    node = node.next
+  end
+  /([^,]*),[^,]*?$/ =~ node.feature
+  $1[-1]
+end
+>>>>>>> 0509a68de5ae9f11dd61817df7560e45f7bdae3a
 
 agent = Mechanize.new
 
@@ -17,6 +33,7 @@ suggest_list_kana=[]
  p word_last
 
  p i
+<<<<<<< HEAD
 
  case word_last[word_last.length-1]
   when "ー"
@@ -26,6 +43,9 @@ suggest_list_kana=[]
    #単語の最後の文字を取得
    word_last = word_last[word_last.length-1]
  end 
+=======
+ word_last = last_word word[i]
+>>>>>>> 0509a68de5ae9f11dd61817df7560e45f7bdae3a
 
  #んがついたら終わり
  if word_last=="ん"
@@ -36,6 +56,7 @@ suggest_list_kana=[]
  #googleから候補をXMLで取得
  suggest=agent.get('http://google.co.jp/complete/search?output=toolbar&hl=ja&q=' + word_last)
  #puts suggest.body.toutf8
+<<<<<<< HEAD
 
  #XMLを解析する準備
  source=suggest.body.toutf8
@@ -79,6 +100,8 @@ suggest_list_kana=[]
  puts suggest_list_kana
  suggest_list.clear
  suggest_list_kana.clear
+=======
+>>>>>>> 0509a68de5ae9f11dd61817df7560e45f7bdae3a
 
  #start_text = suggest.body.index("data=""") 
  #end_text = suggest.body.index("""/>") 
@@ -86,8 +109,13 @@ suggest_list_kana=[]
 
  #word<<result
 
+<<<<<<< HEAD
  #puts word
 
+=======
+ puts result
+ sleep 1
+>>>>>>> 0509a68de5ae9f11dd61817df7560e45f7bdae3a
 end
 
 
